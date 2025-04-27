@@ -1,0 +1,385 @@
+:root {
+  --primary: #6c5ce7;
+  --secondary: #a29bfe;
+  --dark: #2d3436;
+  --light: #f5f6fa;
+  --success: #00b894;
+  --danger: #d63031;
+  --warning: #fdcb6e;
+  --info: #0984e3;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #0a0a1a;
+  color: var(--light);
+  overflow-x: hidden;
+}
+
+.space-background {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.stars, .twinkling {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.stars {
+  background: #000 url('https://www.script-tutorials.com/demos/360/images/stars.png') repeat top center;
+  z-index: 0;
+}
+
+.twinkling {
+  background: transparent url('https://www.script-tutorials.com/demos/360/images/twinkling.png') repeat top center;
+  z-index: 1;
+  animation: twinkle 200s linear infinite;
+}
+
+@keyframes twinkle {
+  from { background-position: 0 0; }
+  to { background-position: -10000px 5000px; }
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.card-header h1 {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.card-header p {
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #5649d1;
+  transform: translateY(-2px);
+}
+
+.admin-link {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.admin-link a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.admin-link a:hover {
+  color: var(--primary);
+}
+
+.message {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  display: none;
+}
+
+.message.success {
+  background: rgba(0, 184, 148, 0.2);
+  color: var(--success);
+  display: block;
+}
+
+.message.error {
+  background: rgba(214, 48, 49, 0.2);
+  color: var(--danger);
+  display: block;
+}
+
+/* Admin Dashboard Styles */
+.admin-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+
+.sidebar {
+  width: 250px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-profile {
+  text-align: center;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-size: 2rem;
+  color: white;
+}
+
+.sidebar nav ul {
+  list-style: none;
+}
+
+.sidebar nav ul li {
+  padding: 12px 15px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.sidebar nav ul li i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar nav ul li:hover {
+  background: rgba(108, 92, 231, 0.2);
+}
+
+.sidebar nav ul li.active {
+  background: var(--primary);
+}
+
+.logout-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+
+.logout-btn a {
+  display: block;
+  padding: 12px;
+  background: rgba(214, 48, 49, 0.2);
+  color: var(--danger);
+  text-align: center;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.logout-btn a:hover {
+  background: rgba(214, 48, 49, 0.3);
+}
+
+.logout-btn a i {
+  margin-right: 8px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--secondary);
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: var(--secondary);
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+  background: rgba(108, 92, 231, 0.2);
+  color: var(--secondary);
+  font-weight: 500;
+}
+
+tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.approve-btn, .deny-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.approve-btn {
+  background: var(--success);
+  color: white;
+}
+
+.deny-btn {
+  background: var(--danger);
+  color: white;
+}
+
+.approve-btn:hover, .deny-btn:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-container {
+      flex-direction: column;
+  }
+
+  .sidebar {
+      width: 100%;
+      padding: 15px;
+  }
+
+  .main-content {
+      padding: 20px;
+  }
+
+  .admin-profile {
+      padding: 15px 0;
+  }
+
+  .logout-btn {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      right: auto;
+      margin-top: 20px;
+  }
+}

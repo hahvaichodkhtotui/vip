@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Registration</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="space-background">
+        <div class="stars"></div>
+        <div class="twinkling"></div>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1>VIP Registration</h1>
+                    <p>Join our exclusive community</p>
+                </div>
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="uid">User ID</label>
+                        <input type="text" id="uid" name="uid" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Contact Number</label>
+                        <input type="tel" id="contact" name="contact" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transactionId">Transaction ID</label>
+                        <input type="text" id="transactionId" name="transactionId" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+                <div class="admin-link">
+                    <a href="/login">Admin Login</a>
+                </div>
+                <div id="message" class="message"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>

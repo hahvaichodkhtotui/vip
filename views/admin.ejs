@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="sidebar">
+            <div class="admin-profile">
+                <div class="avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3><%= admin %></h3>
+                <p>Administrator</p>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active" data-tab="pending-tab"><i class="fas fa-clock"></i> Pending</li>
+                    <li data-tab="approved-tab"><i class="fas fa-check-circle"></i> Approved</li>
+                    <li data-tab="expired-tab"><i class="fas fa-hourglass-end"></i> Expired</li>
+                </ul>
+            </nav>
+            <div class="logout-btn">
+                <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="tab-content active" id="pending-tab">
+                <h2>Pending Approvals</h2>
+                <% if (pending.length === 0) { %>
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>No pending requests</p>
+                    </div>
+                <% } else { %>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>User ID</th>
+                                    <th>Contact</th>
+                                    <th>Transaction ID</th>
+                                    <th>Submitted</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% pending.forEach(user => { %>
+                                    <tr>
+                                        <td><%= user.name %></td>
+                                        <td><%= user.uid %></td>
+                                        <td><%= user.contact %></td>
+                                        <td><%= user.transactionId %></td>
+                                        <td><%= new Date(user.submittedAt).toLocaleString() %></td>
+                                        <td class="actions">
+                                            <button class="approve-btn" data-id="<%= user.id %>">Approve</button>
+                                            <button class="deny-btn" data-id="<%= user.id %>">Deny</button>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
+            </div>
+            <div class="tab-content" id="approved-tab">
+                <h2>Approved Users</h2>
+                <% if (approved.length === 0) { %>
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <p>No approved users</p>
+                    </div>
+                <% } else { %>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>User ID</th>
+                                    <th>Contact</th>
+                                    <th>Approved By</th>
+                                    <th>Approved On</th>
+                                    <th>Expires On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% approved.forEach(user => { 
+                                    const approvedDate = new Date(user.approvedDate);
+                                    const expiresOn = new Date(approvedDate);
+                                    expiresOn.setMonth(expiresOn.getMonth() + 1);
+                                %>
+                                    <tr>
+                                        <td><%= user.name %></td>
+                                        <td><%= user.uid %></td>
+                                        <td><%= user.contact %></td>
+                                        <td><%= user.approvedBy %></td>
+                                        <td><%= approvedDate.toLocaleString() %></td>
+                                        <td><%= expiresOn.toLocaleString() %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
+            </div>
+            <div class="tab-content" id="expired-tab">
+                <h2>Expired Users</h2>
+                <% if (expired.length === 0) { %>
+                    <div class="empty-state">
+                        <i class="fas fa-history"></i>
+                        <p>No expired users</p>
+                    </div>
+                <% } else { %>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>User ID</th>
+                                    <th>Contact</th>
+                                    <th>Approved On</th>
+                                    <th>Expired On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% expired.forEach(user => { %>
+                                    <tr>
+                                        <td><%= user.name %></td>
+                                        <td><%= user.uid %></td>
+                                        <td><%= user.contact %></td>
+                                        <td><%= new Date(user.approvedDate).toLocaleString() %></td>
+                                        <td><%= new Date(user.expiredDate).toLocaleString() %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <script src="/js/admin.js"></script>
+</body>
+</html>
