@@ -31,7 +31,15 @@
         </div>
         <div class="main-content">
             <div class="tab-content active" id="pending-tab">
-                <h2>Pending Approvals</h2>
+                <div class="header-row">
+                    <h2>Pending Approvals</h2>
+                    <div class="extend-controls">
+                        <input type="number" id="extendDays" placeholder="Days" min="0">
+                        <input type="number" id="extendHours" placeholder="Hours" min="0">
+                        <button id="extendAllBtn">Extend All</button>
+                    </div>
+                </div>
+                
                 <% if (pending.length === 0) { %>
                     <div class="empty-state">
                         <i class="fas fa-inbox"></i>
@@ -43,10 +51,11 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>User ID</th>
+                                    <th>UID</th>
                                     <th>Contact</th>
                                     <th>Transaction ID</th>
                                     <th>Submitted</th>
+                                    <th>Type</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -58,6 +67,7 @@
                                         <td><%= user.contact %></td>
                                         <td><%= user.transactionId %></td>
                                         <td><%= new Date(user.submittedAt).toLocaleString() %></td>
+                                        <td><%= user.isRenewal ? 'Renewal' : 'New' %></td>
                                         <td class="actions">
                                             <button class="approve-btn" data-id="<%= user.id %>">Approve</button>
                                             <button class="deny-btn" data-id="<%= user.id %>">Deny</button>
@@ -69,6 +79,7 @@
                     </div>
                 <% } %>
             </div>
+
             <div class="tab-content" id="approved-tab">
                 <h2>Approved Users</h2>
                 <% if (approved.length === 0) { %>
@@ -82,26 +93,28 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>User ID</th>
-                                    <th>Contact</th>
+                                    <th>UID</th>
                                     <th>Approved By</th>
                                     <th>Approved On</th>
                                     <th>Expires On</th>
+                                    <th>Days Left</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% approved.forEach(user => { 
-                                    const approvedDate = new Date(user.approvedDate);
-                                    const expiresOn = new Date(approvedDate);
-                                    expiresOn.setMonth(expiresOn.getMonth() + 1);
+                                    const expiryDate = new Date(user.expiryDate);
+                                    const now = new Date();
+                                    const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
                                 %>
                                     <tr>
                                         <td><%= user.name %></td>
                                         <td><%= user.uid %></td>
-                                        <td><%= user.contact %></td>
                                         <td><%= user.approvedBy %></td>
-                                        <td><%= approvedDate.toLocaleString() %></td>
-                                        <td><%= expiresOn.toLocaleString() %></td>
+                                        <td><%= new Date(user.approvedDate).toLocaleString() %></td>
+                                        <td><%= expiryDate.toLocaleString() %></td>
+                                        <td class="<%= daysLeft <= 3 ? 'warning' : '' %>">
+                                            <%= daysLeft > 0 ? daysLeft : 'Expired' %>
+                                        </td>
                                     </tr>
                                 <% }) %>
                             </tbody>
@@ -109,6 +122,7 @@
                     </div>
                 <% } %>
             </div>
+
             <div class="tab-content" id="expired-tab">
                 <h2>Expired Users</h2>
                 <% if (expired.length === 0) { %>
@@ -122,8 +136,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>User ID</th>
-                                    <th>Contact</th>
+                                    <th>UID</th>
                                     <th>Approved On</th>
                                     <th>Expired On</th>
                                 </tr>
@@ -133,7 +146,6 @@
                                     <tr>
                                         <td><%= user.name %></td>
                                         <td><%= user.uid %></td>
-                                        <td><%= user.contact %></td>
                                         <td><%= new Date(user.approvedDate).toLocaleString() %></td>
                                         <td><%= new Date(user.expiredDate).toLocaleString() %></td>
                                     </tr>
@@ -145,6 +157,7 @@
             </div>
         </div>
     </div>
+
     <script src="/js/admin.js"></script>
 </body>
 </html>
