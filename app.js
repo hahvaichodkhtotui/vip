@@ -125,24 +125,33 @@ app.post('/admin/approve/:id', isAuthenticated, (req, res) => {
     const pending = readData('pending');
     const approved = readData('approved');
     const userIndex = pending.findIndex(u => u.id === req.params.id);
-
+    
     if (userIndex === -1) return res.status(404).json({ error: 'User not found' });
 
     const user = pending[userIndex];
     const now = new Date();
-    let approvedDate = new Date();
-
+    let expiryDate = new Date(now);
+    
     if (user.isRenewal) {
         const existingUser = approved.find(u => u.uid === user.uid);
-        approvedDate = existingUser ? new Date(existingUser.approvedDate) : now;
+        if (existingUser) {
+            expiryDate = new Date(existingUser.expiryDate);
+        }
     }
+    expiryDate.setDate(expiryDate.getDate() + 30 + (user.extendDays || 0));
+    expiryDate.setHours(expiryDate.getHours() + (user.extendHours || 0));
 
-    approvedDate.setDate(approvedDate.getDate() + 30 + (user.extendDays || 0));
-    approvedDate.setHours(approvedDate.getHours() + (user.extendHours || 0));
+    if (user.isRenewal) {
+        const existingIndex = approved.findIndex(u => u.uid === user.uid);
+        if (existingIndex !== -1) {
+            approved.splice(existingIndex, 1);
+        }
+    }
 
     approved.push({
         ...user,
-        approvedDate: approvedDate.toISOString(),
+        approvedDate: now.toISOString(),
+        expiryDate: expiryDate.toISOString(),
         approvedBy: req.session.admin
     });
 
@@ -197,5 +206,5 @@ app.post('/admin/deny/:id', isAuthenticated, (req, res) => {
     res.json({ success: true });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 6242;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
